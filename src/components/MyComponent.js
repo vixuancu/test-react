@@ -5,14 +5,32 @@ import React from "react";
 import UserInfor from "./UserInfor";
 import DisplayInfor from "./DisplayInfor";
 class MyComponent extends React.Component {
+  state = {
+    listUsers: [
+      {
+        id: 1,
+        name: "hoi dan it",
+        age: 26,
+      },
+      {
+        id: 2,
+        name: "thang",
+        age: 26,
+      },
+      {
+        id: 3,
+        name: "cu",
+        age: 26,
+      },
+    ],
+  };
   //JSX
   render() {
-    const myInfor = ["a", "b", "c"];
     return (
       <div>
         <UserInfor />
         <br />
-        <DisplayInfor name="hoi dan it" age={26} myInfor={myInfor} />
+        <DisplayInfor listUsers={this.state.listUsers} />
       </div>
     ); // dùng cú pháp this truyền dữ liệu khác kiểu string phải dùng {}
   }
