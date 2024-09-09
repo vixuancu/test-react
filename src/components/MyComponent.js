@@ -32,11 +32,13 @@ class MyComponent extends React.Component {
   //JSX
   render() {
     return (
-      <div>
-        <AddUserInfor handleAddNewUser={this.handleAddNewUser} />
-        <br />
-        <DisplayInfor listUsers={this.state.listUsers} />
-      </div>
+      <>
+        <div>
+          <AddUserInfor handleAddNewUser={this.handleAddNewUser} />
+          <br />
+          <DisplayInfor listUsers={this.state.listUsers} />
+        </div>
+      </>
     ); // dùng cú pháp this truyền dữ liệu khác kiểu string phải dùng {}
   }
 }
