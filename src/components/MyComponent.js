@@ -29,6 +29,15 @@ class MyComponent extends React.Component {
       listUsers: [userObiect, ...this.state.listUsers],
     });
   };
+  handleDeleteUser = (userid) => {
+    let listUserClone = [...this.state.listUsers];
+    console.log("check delete 0 ", this.listUserClone);
+    listUserClone = listUserClone.filter((item) => item.id !== userid); //chú ý gán lại không undefind
+    this.setState({
+      listUsers: [...listUserClone],
+    });
+    console.log("check delete", this.state.listUsers);
+  };
   //JSX
   render() {
     return (
@@ -36,7 +45,10 @@ class MyComponent extends React.Component {
         <div>
           <AddUserInfor handleAddNewUser={this.handleAddNewUser} />
           <br />
-          <DisplayInfor listUsers={this.state.listUsers} />
+          <DisplayInfor
+            listUsers={this.state.listUsers}
+            handleDeleteUser={this.handleDeleteUser}
+          />
         </div>
       </>
     ); // dùng cú pháp this truyền dữ liệu khác kiểu string phải dùng {}
