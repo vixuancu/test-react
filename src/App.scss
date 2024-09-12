@@ -9,6 +9,9 @@ body {
 }
 .app-container {
   .header-container {
+    .navbar {
+      z-index: 10;
+    }
     .navbar-nav {
       .nav-link {
         &.active {
@@ -17,4 +20,9 @@ body {
       }
     }
   }
+}
+video {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
 }
