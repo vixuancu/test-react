@@ -21,7 +21,7 @@ import {
   FaHeart,
 } from "react-icons/fa";
 import "./SideBar.scss";
-
+import { Link } from "react-router-dom";
 const SideBar = (props) => {
   const { image, collapsed, toggled, handleToggleSidebar } = props;
   return (
@@ -58,6 +58,7 @@ const SideBar = (props) => {
               suffix={<span className="badge red">New</span>}
             >
               Dashboard
+              <Link to="/admins" />
             </MenuItem>
             <MenuItem icon={<FaGem />}> components </MenuItem>
           </Menu>
@@ -68,7 +69,10 @@ const SideBar = (props) => {
               icon={<FaGem />}
               title={"Features"}
             >
-              <MenuItem> Quản lí Users</MenuItem>
+              <MenuItem>
+                {" "}
+                Quản lí Users <Link to="/admins/manage-users" />
+              </MenuItem>
               <MenuItem> Quản lí bài Quiz</MenuItem>
               <MenuItem> Quản lí câu hỏi</MenuItem>
             </SubMenu>
