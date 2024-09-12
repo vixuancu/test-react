@@ -8,6 +8,9 @@ import {
   SidebarContent,
 } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
+
+import { DiReact } from "react-icons/di";
+import { MdDashboard } from "react-icons/md";
 import sidebarBg from "../../assets/bg2.jpg";
 import {
   FaTachometerAlt,
@@ -17,6 +20,8 @@ import {
   FaRegLaughWink,
   FaHeart,
 } from "react-icons/fa";
+import "./SideBar.scss";
+
 const SideBar = (props) => {
   const { image, collapsed, toggled, handleToggleSidebar } = props;
   return (
@@ -41,28 +46,31 @@ const SideBar = (props) => {
               whiteSpace: "nowrap",
             }}
           >
-            Hoi Dan IT
+            <DiReact size={"3em"} color="00bfff" /> Hoi Dan IT
           </div>
         </SidebarHeader>
 
         <SidebarContent>
           <Menu iconShape="circle">
             <MenuItem
-              icon={<FaTachometerAlt />}
+              //   icon={<FaTachometerAlt />}
+              icon={<MdDashboard />}
               suffix={<span className="badge red">New</span>}
             >
-              dashboard
+              Dashboard
             </MenuItem>
             <MenuItem icon={<FaGem />}> components </MenuItem>
           </Menu>
           <Menu iconShape="circle">
             <SubMenu
-              suffix={<span className="badge yellow">3</span>}
-              icon={<FaRegLaughWink />}
+              //   suffix={<span className="badge yellow">3</span>}
+              //   icon={<FaRegLaughWink />}
+              icon={<FaGem />}
+              title={"Features"}
             >
-              <MenuItem> 1</MenuItem>
-              <MenuItem> 2</MenuItem>
-              <MenuItem> 3</MenuItem>
+              <MenuItem> Quản lí Users</MenuItem>
+              <MenuItem> Quản lí bài Quiz</MenuItem>
+              <MenuItem> Quản lí câu hỏi</MenuItem>
             </SubMenu>
           </Menu>
         </SidebarContent>
@@ -88,7 +96,7 @@ const SideBar = (props) => {
                   overflow: "hidden",
                 }}
               >
-                viewSource
+                Hoi Dan IT
               </span>
             </a>
           </div>
