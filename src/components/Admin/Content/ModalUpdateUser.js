@@ -18,9 +18,10 @@ const ModalUpdateUser = (props) => {
     setRole("USER");
     setImage("");
     setPreviewImage("");
+    // console.log("props.resetUpdateData ", props);
     props.resetUpdateData();
   };
-  const handleShow = () => setShow(true);
+  // const handleShow = () => setShow(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -56,7 +57,7 @@ const ModalUpdateUser = (props) => {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
-  const handleSubmitCreateUser = async () => {
+  const handleSubmitUpdateUser = async () => {
     //validate
     const isValidEmmail = validateEmail(email);
     if (!isValidEmmail) {
@@ -69,11 +70,14 @@ const ModalUpdateUser = (props) => {
     // }
 
     let data = await putUpdateUser(dataUpdate.id, username, role, image);
-    console.log("check data", data);
+    // console.log("check data", data);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
-      await props.fetchListUsers();
+      // await props.fetchListUsers();
+      // props.setCurrentPage(1);
+      console.log("props.currentPage", props);
+      await props.fetchListUsersWithPaginate(props.currentPage);
     }
 
     if (data && data.EC !== 0) {
@@ -164,7 +168,7 @@ const ModalUpdateUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
+          <Button variant="primary" onClick={() => handleSubmitUpdateUser()}>
             Save
           </Button>
         </Modal.Footer>

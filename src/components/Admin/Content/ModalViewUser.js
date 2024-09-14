@@ -17,7 +17,7 @@ const ModalViewUser = (props) => {
     setPreviewImage("");
     props.resetViewData();
   };
-  const handleShow = () => setShow(true);
+  // const handleShow = () => setShow(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -45,13 +45,6 @@ const ModalViewUser = (props) => {
     } else {
       //   setPreviewImage("");
     }
-  };
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
   };
 
   return (

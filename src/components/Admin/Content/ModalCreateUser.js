@@ -18,7 +18,7 @@ const ModalCreateUser = (props) => {
     setImage("");
     setPreviewImage("");
   };
-  const handleShow = () => setShow(true);
+  // const handleShow = () => setShow(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -53,22 +53,14 @@ const ModalCreateUser = (props) => {
       return;
     }
 
-    // calls api
-    // let data = {
-    //   email: email,
-    //   password: password,
-    //   username: username,
-    //   role: role,
-    //   userImage: image,
-    // };
-    // console.log(data);
-
     let data = await postCreateNewUser(email, password, username, role, image);
     console.log("check data", data);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
-      await props.fetchListUsers();
+      // await props.fetchListUsers();
+      props.setCurrentPage(1);
+      await props.fetchListUsersWithPaginate(1);
     }
 
     if (data && data.EC !== 0) {
