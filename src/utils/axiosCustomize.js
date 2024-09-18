@@ -14,7 +14,7 @@ const instance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
-    console.log("check store", store.getState());
+    // console.log("check store", store.getState());
     const access_token = store?.getState()?.user?.account.access_token;
     config.headers["Authorization"] = "Bearer " + access_token;
     NProgress.start();
@@ -31,7 +31,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   function (response) {
     NProgress.done();
-    console.log("interceptor", response);
+    // console.log("interceptor", response);
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response && response.data ? response.data : response;

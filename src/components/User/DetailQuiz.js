@@ -16,7 +16,7 @@ const DetailQuiz = (props) => {
   }, [quizId]);
   const fetchQuesTions = async () => {
     let res = await getDataQuiz(quizId);
-    console.log("check questions", res);
+    // console.log("check questions", res);
     if (res && res.EC === 0) {
       let raw = res.DT;
       let data = _.chain(raw)
@@ -35,17 +35,17 @@ const DetailQuiz = (props) => {
             item.answers.isSelected = false;
             answers.push(item.answers);
           });
-          console.log("value", value, "key", key);
+          // console.log("value", value, "key", key);
 
           return { questionId: key, answers, questionDesc, image };
         })
         .value();
-      console.log("check raw", data);
+      // console.log("check raw", data);
       setDataQuiz(data);
     }
   };
   //   console.log("check param", params);
-  console.log("check dataquiz", dataQuiz);
+  // console.log("check dataquiz", dataQuiz);
   const handlePrev = () => {
     if (dataQuiz && index - 1 < 0) return;
     setIndex(index - 1);
@@ -76,6 +76,45 @@ const DetailQuiz = (props) => {
       setDataQuiz(dataQuizClone);
     }
   };
+  const handleFinish = () => {
+    console.log("check data before submit", dataQuiz);
+    //   {
+    //     "quizId": 1,
+    //     "answers": [
+    //         {
+    //             "questionId": 1,
+    //             "userAnswerId": [3]
+    //         },
+    //         {
+    //             "questionId": 2,
+    //             "userAnswerId": [6]
+    //         }
+    //     ]
+    // }
+    let payload = {
+      quizId: +quizId,
+      answers: [],
+    };
+    let answer = [];
+    if (dataQuiz && dataQuiz.length > 0) {
+      dataQuiz.forEach((item) => {
+        let questionId = item.questionId;
+        let userAnswerId = [];
+        // todo: userAnswerId
+        item.answers.forEach((a) => {
+          if (a.isSelected) {
+            userAnswerId.push(a.id);
+          }
+        });
+        answer.push({
+          questionId: +questionId,
+          userAnswerId: userAnswerId,
+        });
+      });
+    }
+    payload.answers = answer;
+    console.log("final payload", payload);
+  };
   return (
     <div className="detail-quiz-container">
       <div className="left-content">
@@ -100,7 +139,7 @@ const DetailQuiz = (props) => {
           <button className="btn btn-secondary" onClick={() => handleNext()}>
             Netx
           </button>
-          <button className="btn btn-warning" onClick={() => handleNext()}>
+          <button className="btn btn-warning" onClick={() => handleFinish()}>
             Finish
           </button>
         </div>
