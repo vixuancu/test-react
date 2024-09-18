@@ -1,13 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { getDataQuiz } from "../../services/apiService";
 import _ from "lodash";
 import "./DetailQuiz.scss";
+import Question from "./Question";
 const DetailQuiz = (props) => {
   const location = useLocation();
   const params = useParams();
   //   console.log(location);
   const quizId = params.id;
+  const [dataQuiz, setDataQuiz] = useState([]);
+  const [index, setIndex] = useState(0);
   useEffect(() => {
     fetchQuesTions();
   }, [quizId]);
@@ -37,9 +40,20 @@ const DetailQuiz = (props) => {
         })
         .value();
       console.log("check raw", data);
+      setDataQuiz(data);
     }
   };
   //   console.log("check param", params);
+  console.log("check dataquiz", dataQuiz);
+  const handlePrev = () => {
+    if (dataQuiz && index - 1 < 0) return;
+    setIndex(index - 1);
+  };
+  const handleNext = () => {
+    if (dataQuiz && dataQuiz.length > index + 1) {
+      setIndex(index + 1);
+    }
+  };
   return (
     <div className="detail-quiz-container">
       <div className="left-content">
@@ -51,16 +65,18 @@ const DetailQuiz = (props) => {
           <img />
         </div>
         <div className="q-content">
-          <div className="question">question :1 how are you</div>
-          <div className="answer">
-            <div className="a-child">A</div>
-            <div className="b-child">B</div>
-            <div className="c-child">C</div>
-          </div>
+          <Question
+            index={index}
+            data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
+          />
         </div>
         <div className="footer">
-          <button className="btn btn-primary ">Prev</button>
-          <button className="btn btn-secondary ml-3">Netx</button>
+          <button className="btn btn-primary " onClick={() => handlePrev()}>
+            Prev
+          </button>
+          <button className="btn btn-secondary" onClick={() => handleNext()}>
+            Netx
+          </button>
         </div>
       </div>
       <div className="right-content">count down</div>
