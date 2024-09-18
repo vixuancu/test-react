@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { getDataQuiz } from "../../services/apiService";
+import { getDataQuiz, postSubmitQuiz } from "../../services/apiService";
 import _ from "lodash";
 import "./DetailQuiz.scss";
 import Question from "./Question";
+import ModalResult from "./ModalResult";
 const DetailQuiz = (props) => {
   const location = useLocation();
   const params = useParams();
@@ -11,6 +12,8 @@ const DetailQuiz = (props) => {
   const quizId = params.id;
   const [dataQuiz, setDataQuiz] = useState([]);
   const [index, setIndex] = useState(0);
+  const [isShowModalResult, setIsShowModalResult] = useState(false);
+  const [dataModalResult, setDataModalResult] = useState({});
   useEffect(() => {
     fetchQuesTions();
   }, [quizId]);
@@ -76,7 +79,7 @@ const DetailQuiz = (props) => {
       setDataQuiz(dataQuizClone);
     }
   };
-  const handleFinish = () => {
+  const handleFinish = async () => {
     console.log("check data before submit", dataQuiz);
     //   {
     //     "quizId": 1,
@@ -113,7 +116,20 @@ const DetailQuiz = (props) => {
       });
     }
     payload.answers = answer;
-    console.log("final payload", payload);
+    // console.log("final payload", payload);
+    //submit API
+    let res = await postSubmitQuiz(payload);
+    console.log("check res", res);
+    if (res && res.EC === 0) {
+      setDataModalResult({
+        countCorrect: res.DT.countCorrect,
+        countTotal: res.DT.countTotal,
+        quizData: res.DT.quizData,
+      });
+      setIsShowModalResult(true);
+    } else {
+      alert("something wrong ...");
+    }
   };
   return (
     <div className="detail-quiz-container">
@@ -145,6 +161,11 @@ const DetailQuiz = (props) => {
         </div>
       </div>
       <div className="right-content">count down</div>
+      <ModalResult
+        show={isShowModalResult}
+        setShow={setIsShowModalResult}
+        dataModalResult={dataModalResult}
+      />
     </div>
   );
 };
