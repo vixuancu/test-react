@@ -21,8 +21,9 @@ import {
   FaHeart,
 } from "react-icons/fa";
 import "./SideBar.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const SideBar = (props) => {
+  const navigate = useNavigate();
   const { image, collapsed, toggled, handleToggleSidebar } = props;
   return (
     <>
@@ -46,7 +47,8 @@ const SideBar = (props) => {
               whiteSpace: "nowrap",
             }}
           >
-            <DiReact size={"3em"} color="00bfff" /> Hoi Dan IT
+            <DiReact size={"3em"} color="00bfff" />
+            <span onClick={() => navigate("/")}>hoidanIT</span>
           </div>
         </SidebarHeader>
 
@@ -73,7 +75,11 @@ const SideBar = (props) => {
                 {" "}
                 Quản lí Users <Link to="/admins/manage-users" />
               </MenuItem>
-              <MenuItem> Quản lí bài Quiz</MenuItem>
+              <MenuItem>
+                {" "}
+                Quản lí bài Quiz
+                <Link to="/admins/manage-quizzes" />
+              </MenuItem>
               <MenuItem> Quản lí câu hỏi</MenuItem>
             </SubMenu>
           </Menu>
