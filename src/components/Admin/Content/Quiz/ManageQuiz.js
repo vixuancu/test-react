@@ -1,20 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./ManageQuiz.scss";
 import Select from "react-select";
 import { postCreateNewQuiz } from "../../../../services/apiService";
 import { toast } from "react-toastify";
 import TableQuiz from "./TableQuiz";
 import Accordion from "react-bootstrap/Accordion";
+import { getAllQuizAdmin } from "../../../../services/apiService";
 const options = [
   { value: "EASY", label: "EASY" },
   { value: "MEDIUM", label: "MEDIUM" },
   { value: "HARD", label: "HARD" },
 ];
 const ManageQuiz = (props) => {
+  const [listQuiz, setListQuiz] = useState([]);
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [type, setType] = useState("");
   const [image, setImage] = useState(null);
+  // const [showModalDeleteQuiz, setShowModalDeleteQuiz] = useState(false);
+  const [dataDelete, setDataDelete] = useState({});
+  // const [showModalUpdateQuiz, setShowModalUpdateQuiz] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState({});
+  useEffect(() => {
+    fetchQuiz();
+  }, []);
+  const fetchQuiz = async () => {
+    setDataDelete({});
+    setDataUpdate({});
+    let res = await getAllQuizAdmin();
+    console.log("res table quiz", res);
+    if (res && res.EC === 0) {
+      setListQuiz(res.DT);
+    }
+  };
+
   const handleChangeFile = (event) => {
     if (event.target && event.target.files && event.target.files[0]) {
       setImage(event.target.files[0]);
@@ -34,6 +53,7 @@ const ManageQuiz = (props) => {
       setName("");
       setDesc("");
       setImage(null);
+      fetchQuiz();
     } else {
       toast.error(res.EM);
     }
@@ -103,7 +123,14 @@ const ManageQuiz = (props) => {
       </Accordion>
 
       <div className="list-detail">
-        <TableQuiz />
+        <TableQuiz
+          listQuiz={listQuiz}
+          dataDelete={dataDelete}
+          setDataDelete={setDataDelete}
+          setDataUpdate={setDataUpdate}
+          dataUpdate={dataUpdate}
+          fetchQuiz={fetchQuiz}
+        />
       </div>
     </div>
   );
