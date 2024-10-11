@@ -3,10 +3,14 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../services/apiService";
+import { toast } from "react-toastify";
+import { doLogout } from "../../redux/action/userAction";
 const Header = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const account = useSelector((state) => state.user.account);
+  const dispatch = useDispatch();
   console.log("accout:", account);
   console.log("isAuthenticated:", isAuthenticated);
   //
@@ -16,6 +20,17 @@ const Header = () => {
   };
   const handleRegister = () => {
     navigate("/register");
+  };
+  const handleLogOut = async () => {
+    let res = await logout(account.email, account.refresh_token);
+    // console.log("check logout", res);
+    if (res && res.EC === 0) {
+      // clear data redux
+      dispatch(doLogout());
+      navigate("/login");
+    } else {
+      toast.error(res.EM);
+    }
   };
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -53,9 +68,10 @@ const Header = () => {
             ) : (
               <>
                 <NavDropdown title="Settings" id="basic-nav-dropdown">
-                  <NavDropdown.Item>Login</NavDropdown.Item>
-                  <NavDropdown.Item>Logout</NavDropdown.Item>
                   <NavDropdown.Item>Profile</NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => handleLogOut()}>
+                    Logout
+                  </NavDropdown.Item>
                 </NavDropdown>
               </>
             )}
