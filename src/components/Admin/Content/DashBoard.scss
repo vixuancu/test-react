@@ -3,24 +3,34 @@
   .title {
     font-weight: 600;
     font-size: 20px;
+    margin-bottom: 20px;
   }
   .content {
     display: flex;
+    gap: 20px;
     .c-left {
       width: 50%;
-      border: 1px solid green;
+
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
       gap: 10px;
       .child {
-        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        .text-2 {
+          font-size: 25px;
+        }
       }
     }
     .c-right {
       width: 50%;
-      border: 1px solid red;
-      height: 300px;
+
+      height: 350px;
     }
   }
 }
