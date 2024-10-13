@@ -8,6 +8,7 @@ import { logout } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { doLogout } from "../../redux/action/userAction";
 import Language from "./Language";
+import { FaReact } from "react-icons/fa";
 const Header = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const account = useSelector((state) => state.user.account);
@@ -36,6 +37,9 @@ const Header = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
+        <div className="navbar-brand">
+          <FaReact className="navbar-icon" />
+        </div>
         <NavLink to="/" className="navbar-brand">
           Hỏi Dân IT
         </NavLink>
